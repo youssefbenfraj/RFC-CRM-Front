@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Role } from 'src/app/entities/role';
@@ -18,8 +18,13 @@ export class LoginComponent implements OnInit {
     private service: JwtService,
     private fb: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private cdr: ChangeDetectorRef,
   ) {}
+
+  triggerChangeDetection() {
+    this.cdr.detectChanges();
+  }
 
   ngOnInit(): void {
     localStorage.removeItem("jwtToken");
@@ -37,7 +42,6 @@ export class LoginComponent implements OnInit {
       (response) => {
         console.log(response);
         if (response.jwtToken !== null) {
-          alert("Helloooooooo" + response.jwtToken);
           const jwtToken = response.jwtToken;
           localStorage.setItem('jwtToken', jwtToken);
 
@@ -50,6 +54,7 @@ export class LoginComponent implements OnInit {
         }
       }
     );
+    this.triggerChangeDetection();
   }
   
 
@@ -62,13 +67,13 @@ export class LoginComponent implements OnInit {
 
     switch (role) {
       case "customer":
-        this.router.navigateByUrl("/user");
+        this.router.navigate(['/user']);
         break;
       case "support":
-        this.router.navigateByUrl("/user");
+        this.router.navigate(['/user']);
         break;
       case "admin":
-        this.router.navigateByUrl("/admin");
+        this.router.navigate(['/admin']);
         break;
       default:
         alert("User not found");

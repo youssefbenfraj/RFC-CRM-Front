@@ -1,0 +1,30 @@
+<div class="comment-list"  *ngIf="showComments">
+    <div *ngIf="comments.length === 0">
+        <p>No comments yet on this post</p>
+      </div>
+    <div *ngIf="comments.length > 0">
+      <label for="comment" class="text-black font-w600 form-label">Comments</label>
+    <div *ngFor="let comment of comments">
+      <div class="card mb-3"> <!-- Card layout for each comment -->
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <!-- If you have user images, display them -->
+            <!--img src="{{ comment.user }}" alt="Profile" class="rounded-circle me-2" width="40" height="40"-->
+            <strong>{{ comment.user.firstName }} {{ comment.user.lastName }}</strong> <!-- Display user name -->
+          </div>
+          <p>{{ comment.content }}</p> <!-- Display comment content -->
+          <small>{{ comment.timestamp | date:'short' }}</small> <!-- Display comment timestamp -->
+          <button *ngIf="isCommentOwner(comment)" class="btn-delete" (click)="deleteComment(comment)">delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+      
+  
+    <!-- Add a form to submit new comments -->
+    <!--div class="comment-form">
+        <input [(ngModel)]="newCommentContent" placeholder="Write a comment..." class="form-control mb-2">
+        <button type="button" class="btn btn-primary" (click)="addComment()">Add Comment</button>
+      </div-->
+    

@@ -1,70 +1,142 @@
 <app-side-bar></app-side-bar>
 
-        <!--**********************************
-            Content body start
-        ***********************************-->
-        <div class="content-body">
-            <div class="container-fluid">
-				
-                <!-- row -->
-                <div class="row">
-                    <div class="col-xl-8" *ngFor="let post of posts">
-                        <div class="card">
-                            <div class="card-body">
-								<div class="post-details">
-									<h3 class="mb-2 text-black">{{ post.titlePost }}</h3>
-									<ul class="mb-4 post-meta d-flex flex-wrap">
-										<li class="post-author me-3">By Admin</li>
-										<li class="post-date me-3"><i class="fas fa-calendar-check me-2"></i>{{ post.timestamp | date }}</li>
-										<li class="post-comment"><i class="fas fa-comment me-2"></i>28</li>
-									</ul>
-									<img src="../assets/images/help.jpg" alt="" class="img-fluid mb-3 w-100 rounded">
-									<p>{{ post.contentPost }}</p>
-									<div class="profile-skills mt-5 mb-5">
-										<h4 class="text-primary mb-2">Category</h4>
-										<a href="javascript:void();;" class="btn btn-primary light btn-xs mb-1">{{ post.category }}</a>
-									</div>
-									<div class="comment-respond" id="respond">
-										<h4 class="comment-reply-title text-primary mb-3" id="reply-title">Leave a Reply </h4>
-										<form class="comment-form" id="commentform" method="post">
-											<div class="row"> 
-												<div class="col-lg-6">
-													<div class="mb-3">
-														<label for="author" class="text-black font-w600 form-label">Name <span class="required">*</span></label>
-														<input type="text" class="form-control" value="Author" name="Author" placeholder="Author" id="author">
-													</div>
-												</div>
-												<div class="col-lg-6">
-													<div class="mb-3">
-														<label for="email" class="text-black font-w600 form-label">Email <span class="required">*</span></label>
-														<input type="text" class="form-control" value="Email" placeholder="Email" name="Email" id="email">
-													</div>
-												</div>
-												<div class="col-lg-12">
-													<div class="mb-3">
-														<label for="comment" class="text-black font-w600 form-label">Comment</label>
-														<textarea rows="8" class="form-control" name="comment" placeholder="Comment" id="comment"></textarea>
-													</div>
-												</div>
-												<div class="col-lg-12">
-													<div class="mb-3">
-														<input type="submit" value="Post Comment" class="submit btn btn-primary" id="submit" name="submit">
-													</div>
-												</div>
-											</div>
-										</form>
-									</div>
-								</div>
+<div class="content-body">
+  <div class="container-fluid">
+    <!-- Test Posts -->
+    <div class="card">
+      <div class="card-body">
+        <div class="profile-tab">
+          <div class="custom-tab-1">
+            <div class="tab-content">
+              <div id="my-posts" class="tab-pane fade active show">
+                <div class="my-post-content pt-3">
+                  <!-- Post Input Section -->
+                  <div class="post-input">
+                    <textarea name="textarea" id="textarea" cols="30" rows="5" class="form-control bg-transparent" placeholder="Please type what you want...."></textarea>
+
+                    <!-- Upload and Post Buttons -->
+                    <a href="javascript:void(0);" class="btn btn-primary light me-1 px-3" data-bs-toggle="modal" data-bs-target="#cameraModal">
+                      <i class="fa fa-camera m-0"></i>
+                    </a>
+
+                    <!-- Modal for Image Upload -->
+                    <div class="modal fade" id="cameraModal">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Upload images</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="input-group mb-3">
+                              <span class="input-group-text">Upload</span>
+                              <div class="form-file">
+                                <input type="file" class="form-file-input form-control">
+                              </div>
                             </div>
+                          </div>
                         </div>
-						
+                      </div>
                     </div>
+
+                    <!-- Modal for Posting -->
+                    <a href="javascript:void(0);" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal">Post</a>
+
+                    <div class="modal fade" id="postModal">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Post</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+                          <div class="modal-body">
+                            <!-- Form for creating a post -->
+                            <form [formGroup]="postForm">
+								<input type="text" formControlName="title" placeholder="Title" class="form-control mb-2">
+								<textarea formControlName="content" rows="5" placeholder="Please type what you want..." class="form-control bg-transparent mb-2"></textarea>
+								<input type="text" formControlName="category" placeholder="Category" class="form-control mb-2">
+								<button type="button" class="btn btn-primary" (click)="createPost()">Post</button>
+							  </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Horizontal Divider to Separate Sections -->
+                    <hr class="my-4" /> <!-- Adds a horizontal line between sections -->
+
+                    <!-- Display Posts -->
+                    <div *ngFor="let post of posts" class="col-xl-8" style="margin-bottom: 20px;"> <!-- Vertical spacing -->
+                      <div class="card"> <!-- Card layout for each post -->
+                        <div class="card-body">
+                          <!-- Post Title -->
+                          <a class="post-title" href="post-details.html">
+                            <h3 class="text-black">{{ post.titlePost }}</h3>
+                          </a>
+
+                          <!-- Post Meta Information -->
+                          <ul class="mb-4 post-meta d-flex flex-wrap">
+                            <li class="post-author me-3">By {{ post.user.firstName }} {{ post.user.lastName }}</li>
+                            <li class="post-date me-3">
+                              <i class="fas fa-calendar-check me-2"></i>{{ post.timestamp | date }}
+                            </li>
+                            <li class="post-comment">
+                              <i class="fas fa-comment me-2"></i>2
+                            </li>
+                          </ul>
+
+                          <!-- Post Content -->
+                          <div class="post-content-container">
+                            <p class="post-content">{{ post.contentPost }}</p>
+							<a href="javascript:void();;" class="btn btn-primary light btn-xs mb-1">{{ post.category }}</a>
+                          </div>
+
+                          <!-- Like and Comment Buttons -->
+                          <button class="btn btn-primary me-2" (click)="likePost(post)">
+                            <i class="fa fa-heart"></i> Like
+                          </button>
+
+                          <!-- Comment Form -->
+                          <div class="mb-3">
+                            <label for="newComment" class="text-black font-w600 form-label">Add a Comment</label>
+                            <textarea id="newComment" rows="3" class="form-control" [(ngModel)]="newCommentContent" placeholder="Type your comment here..."></textarea>
+                            <button class="btn btn-primary mt-2" (click)="createComment(post)">Submit Comment</button>
+                          <button class="btn btn-primary mt-2" (click)="toggleCommentsVisibility(post)">
+                            <i class="fas fa-eye"></i> <!-- Font Awesome eye icon -->
+                        </button>
+                      </div>
+                          <!-- Render the comment list -->
+                          <app-comment-list [postId]="post.idPost" [showComments]="post.showComments"></app-comment-list>                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-				
-						
-        
+              </div>
+
+              <!-- Modal for Reply -->
+              <div class="modal fade" id="replyModal">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Post Reply</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <textarea class="form-control" rows="4">Message</textarea>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Reply</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
+      </div>
+    </div>
+  </div>
+</div>

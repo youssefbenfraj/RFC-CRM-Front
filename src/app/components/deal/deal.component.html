@@ -1,33 +1,32 @@
 <app-side-bar></app-side-bar>
 
 <div class="content-body">
-    <div class="container-fluid">
-       
-        <div class="col-lg-12 col-xl-6" *ngFor="let deal of deals">
-            <div class="card">
-                <div class="card-body">
-                    <div class="menu-product d-flex">
-                        <img src="../assets/images/certif.png">
-                        <div class="content-detail-wrap">	
-                            <div>
-                                <h4>{{deal.title}}</h4>
-                                <span>{{deal.description}}</span>
-                            </div>
-                            <div class="mt-4 d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h5 class="mb-0"><span class="fs-14 me-2">Last Date to Submit</span></h5>
-                                    <span class="text-danger">{{deal.expectedCloseDate |date }}</span>
-                                </div>
-                                <div>
-                                    <a href="javascript:void(0);" class="btn btn-danger">Submit</a>
-                                </div>
-                            </div>
-                        </div>	
-                    </div>
+  <div class="container-fluid">
+    <!-- Loop through deals -->
+    <div *ngFor="let deal of deals" class="col-lg-12 col-xl-6" style="margin-bottom: 20px;"> <!-- Add spacing -->
+      <div class="card">
+        <div class="card-body">
+          <div class="menu-product d-flex">
+            <img src="../assets/images/certif.png" alt="Certification Image"> <!-- Example image -->
+            <div class="content-detail-wrap">
+              <div>
+                <h4>{{deal.title}}</h4>
+                <span>{{deal.description}}</span>
+              </div>
+              <div class="mt-4 d-flex justify-content-between align-items-center">
+                <div>
+                  <h5 class="mb-0"><span class="fs-14 me-2">Last Date to Submit</span></h5>
+                  <span class="text-danger">{{deal.expectedCloseDate | date}}</span>
                 </div>
+                <!-- Update the "Submit" button to call createSubscription -->
+                <div>
+                  <button class="btn btn-danger" (click)="createSubscription(deal)">Submit</button> <!-- Trigger subscription -->
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-       
-       
+      </div>
     </div>
+  </div>
 </div>

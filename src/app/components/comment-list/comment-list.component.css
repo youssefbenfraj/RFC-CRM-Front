@@ -1,0 +1,20 @@
+.btn-delete {
+    position: absolute;
+    top: 5px; /* Adjust as needed */
+    right: 5px; /* Adjust as needed */
+    padding: 5px 10px; /* Adjust padding as needed */
+    background-color: transparent;
+    border: 1px solid red; /* Add border for button */
+    color: red;
+    font-weight: bold;
+    font-size: 14px; /* Adjust font size as needed */
+    cursor: pointer;
+    border-radius: 10px; /* Add border radius for rounded corners */
+    transition: background-color 0.3s ease; /* Add transition for smoother hover effect */
+  }
+  
+  .btn-delete:hover {
+    background-color: red; /* Change background color on hover */
+    color: white; /* Change text color on hover */
+  }
+  

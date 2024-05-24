@@ -1,4 +1,9 @@
 import { Role } from "./role";
+import { Post } from "./post"; 
+import { subscription } from "./subscription";
+import { likePost } from "./likePost";
+import { comment } from "./comment";
+
 
 export class User {
     idUser!: number;
@@ -11,5 +16,9 @@ export class User {
     role!: Role;
     password!: string;
     approuvement!: boolean;
+    posts!: Post[]; 
+    comments!: comment[]; 
+    likePosts!: likePost[]; 
+    subscriptions!: subscription[]; 
+    propic!: string; // Profile Picture
 }
-

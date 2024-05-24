@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-simple-user',
@@ -8,8 +8,14 @@ import { Component } from '@angular/core';
 export class SimpleUserComponent {
   selectedUser: any = {};
 
-  constructor() {
+  constructor( private changeDetector: ChangeDetectorRef) {
     this.getUserFromLocalStorage();
+  }
+
+  
+  
+  triggerChangeDetection(){
+    this.changeDetector.detectChanges();
   }
 
   getUserFromLocalStorage() {

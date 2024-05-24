@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { User } from 'src/app/entities/user';
 import { UserService } from 'src/app/services/user.service';
 
@@ -13,8 +13,13 @@ export class UserComponent {
   creatingMode : boolean = true;
   
 
-  constructor(private userService: UserService,){
+  constructor(private userService: UserService,
+    private changeDetector: ChangeDetectorRef
+  ){
     this.getUsers();
+  }
+  ngOnInit(): void {
+    this.changeDetector.detectChanges();
   }
   getUsers(){
     this.userService.getUsers().subscribe((response : User[])=>{
